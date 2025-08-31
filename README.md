@@ -10,11 +10,16 @@ https://github.com/user-attachments/assets/672e5a16-8be0-441b-ba86-ef36d5dca411
 - Kill a process by selecting it (fzf if available; prompt fallback).
 - Works on macOS (lsof) and Linux (ss).
 
+## Install via github 
+```sh
+git clone git@github.com:fiqryq/port.git #close inside tmux/plugin and hit bind + I for install plugins
+```
+
 ## Install (TPM)
 
 ```tmux
 set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'fiqry/port'
+set -g @plugin 'fiqryq/port'
 
 # Optional:
 set -g @port_popup_width  80
