@@ -1,6 +1,8 @@
 # tmux-port
 
-A tiny tmux plugin to view listening ports and kill processes — in a centered popup.
+A tiny tmux plugin to view listening ports and kill processes — in a centered popup or split panes.
+
+https://github.com/user-attachments/assets/672e5a16-8be0-441b-ba86-ef36d5dca411
 
 ## Features
 
