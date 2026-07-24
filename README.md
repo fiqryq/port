@@ -2,7 +2,9 @@
 
 A tiny tmux plugin to view listening ports, kill processes, and tunnel them out — in an fzf-driven popup.
 
-https://github.com/user-attachments/assets/672e5a16-8be0-441b-ba86-ef36d5dca411
+
+https://github.com/user-attachments/assets/27c2a402-acec-4d44-b546-6a2952c22da2
+
 
 ## Features
 
