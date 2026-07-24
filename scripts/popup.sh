@@ -10,14 +10,21 @@ bd="$(tmux show -gqv @port_popup_border)"
 x="$(tmux show -gqv @port_popup_x)"
 y="$(tmux show -gqv @port_popup_y)"
 
-# Use floating popup if supported
-if tmux display-popup -h >/dev/null 2>&1; then
-  # Build popup command
+# Use floating popup if supported. `tmux display-popup -h` (no value) is
+# always a parse error ("-h expects an argument") regardless of whether the
+# running tmux actually has display-popup, so that can't be used to detect
+# support — check the command table instead.
+if tmux list-commands 2>/dev/null | grep -q '^display-popup '; then
+  # Build popup command. display-popup has no on/off argument for the
+  # border — it's shown by default and -B turns it off.
   popup_cmd="tmux display-popup"
-  popup_cmd="$popup_cmd -w ${w:-80}"
-  popup_cmd="$popup_cmd -h ${h:-20}"
-  popup_cmd="$popup_cmd ${bd:-on}"
-  
+  popup_cmd="$popup_cmd -w ${w:-90%}"
+  popup_cmd="$popup_cmd -h ${h:-90%}"
+  case "${bd:-on}" in
+    off | Off | OFF) popup_cmd="$popup_cmd -B" ;;
+  esac
+
+
   # Add positioning if specified
   if [ -n "$x" ]; then
     popup_cmd="$popup_cmd -x $x"
@@ -32,10 +39,10 @@ if tmux display-popup -h >/dev/null 2>&1; then
   fi
   
   # Execute the UI script
-  popup_cmd="$popup_cmd -E \"$plugin_dir/scripts/ui.sh\""
+  popup_cmd="$popup_cmd -E \"$plugin_dir/scripts/picker.sh\""
   
   eval "$popup_cmd"
 else
-  # Fallback to split window
-  tmux split-window -v -l "${h:-20}" "$plugin_dir/scripts/ui.sh"
+  # Fallback to split window (only reached on tmux < 3.2, no display-popup)
+  tmux split-window -v -l "${h:-90%}" "$plugin_dir/scripts/picker.sh"
 fi
